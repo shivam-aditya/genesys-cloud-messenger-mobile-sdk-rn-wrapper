@@ -103,9 +103,9 @@ In order to be able to use the chat module on iOS please follow the next steps.
     ├── ios
     │   ├── Podfile   <---
     ```
-    -  validate your platform is set to `iOS11` or above.
+    -  validate your platform is set to `iOS13` or above.
     ```ruby
-    platform :ios, '11.0'
+    platform :ios, '13.0'
     ```
     -  Add Genesys Messeging SDK sources.
     ```ruby

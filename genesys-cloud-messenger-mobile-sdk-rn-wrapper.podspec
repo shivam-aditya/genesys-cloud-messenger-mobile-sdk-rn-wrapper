@@ -8,11 +8,12 @@ Pod::Spec.new do |s|
   s.summary      = 'Genesys Cloud Messenger Mobile SDK wrapper for React Native.'
   s.homepage     = 'https://genesys.com'
   s.license      = { :type => 'MIT' }
-  s.authors      = 'Genesys'
+  s.authors      = 'Genesys, Shivam Aditya'
   s.platforms    = { :ios => '13.0' }
-  s.source       = { :git => 'https://github.com/genesys/genesys-cloud-messenger-mobile-sdk-rn-wrapper.git', :tag => '#{s.version}' }
+  s.source       = { :git => 'https://github.com/shivam-aditya/genesys-cloud-messenger-mobile-sdk-rn-wrapper', :tag => '#{s.version}' }
   s.source_files = "ios/**/*.{h,m,mm}"
   s.dependency 'React-Core'
-  s.dependency 'GenesysCloud', '4.1.0'
+  # s.dependency 'GenesysCloud', '4.1.0'
+  s.dependency 'GenesysCloud'
   s.static_framework = true
 end

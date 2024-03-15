@@ -134,8 +134,9 @@ repositories {
         )
     }
 
-    maven {url "https://genesysdx.jfrog.io/artifactory/genesysdx-android.dev"}
-    maven {url "https://genesysdx.jfrog.io/artifactory/genesysdx-android.prod"}
+    maven {
+        url "https://genesysdx.jfrog.io/artifactory/genesys-cloud-android.prod/"
+    }
 }
 
 dependencies {
@@ -147,10 +148,9 @@ dependencies {
     implementation "com.facebook.fbjni:fbjni-java-only:0.0.4"
     implementation "com.facebook.yoga:proguard-annotations:1.19.0"
 
-    implementation("com.genesys.cloud:accessibility:5.0.2.rc2")
-    implementation("com.genesys.cloud:core:5.0.2.rc1") 
-    implementation("com.genesys.cloud:chatintegration:5.0.2.rc2") 
-    implementation("com.genesys.cloud:ui:5.0.2.rc5")
+    implementation 'com.genesys.cloud:core:1.7.0'
+    implementation 'com.genesys.cloud:chatintegration:1.7.0'
+    implementation 'com.genesys.cloud:ui:1.7.0'
 
     implementation 'com.google.android.material:material:1.4.0'
 }

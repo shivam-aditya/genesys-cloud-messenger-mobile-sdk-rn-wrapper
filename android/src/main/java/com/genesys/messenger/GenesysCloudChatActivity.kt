@@ -23,28 +23,20 @@ import com.genesys.cloud.ui.structure.controller.ChatLoadedListener
 class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
 
     private var chatController: ChatController? = null
-
-    private var endMenu: MenuItem? = null
-
     lateinit var account: AccountInfo
 
+    private var endMenu: MenuItem? = null
     private lateinit var onError: ((NRError) -> Unit)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(GenTag, "onCreate:")
 
         setContentView(R.layout.fragment_layout)
-
         setSupportActionBar(findViewById(R.id.chat_toolbar))
-
         requestedOrientation = intent.getIntExtra(ScreenOrientation, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-
         onError = reactInstanceManager.currentReactContext::emitError
-
         initAccount()
-
         createChat()
     }
 
@@ -54,20 +46,44 @@ class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
     }
 
     private fun initAccount() {
-        account = MessengerAccount(intent.getStringExtra(DeploymentId, ""), intent.getStringExtra(Domain, "")).apply {
-            tokenStoreKey = intent.getStringExtra(TokenStoreKey, "")
+//        account = MessengerAccount(intent.getStringExtra(DeploymentId, ""), intent.getStringExtra(Domain, "")).apply {
+//            tokenStoreKey = intent.getStringExtra(TokenStoreKey, "")
+//            logging = intent.getBooleanExtra(Logging, false)
+//        }
+        account = MessengerAccount(
+                deploymentId = intent.getStringExtra(DeploymentId, ""),
+                domain = intent.getStringExtra(Domain, "")
+        ).apply {
             logging = intent.getBooleanExtra(Logging, false)
         }
     }
 
     private fun createChat() {
+//        chatController = ChatController.Builder(this).apply {
+//            chatEventListener(this@GenesysCloudChatActivity)
+//        }.build(account, object : ChatLoadedListener {
+//            override fun onComplete(result: ChatLoadResponse) {
+//                val error = result.error ?: takeIf { result.fragment == null }?.let {
+//                    NRError(NRError.EmptyError, "Chat UI failed to init")
+//                }
+//
+//                error?.let {
+//                    Log.e(GenTag, "!!! Failed to start Messenger chat : $it")
+//                    finish()
+//                    onError(it)
+//                } ?: openConversationFragment((result.fragment!!))
+//            }
+//        })
 
-        chatController = ChatController.Builder(this).apply {
-            chatEventListener(this@GenesysCloudChatActivity)
-
-        }.build(account, object : ChatLoadedListener {
-
+        chatController = ChatController.Builder(this).build(account, object : ChatLoadedListener {
             override fun onComplete(result: ChatLoadResponse) {
+                result.fragment?.let {
+                    supportFragmentManager.beginTransaction()
+                            .replace(R.id.chat_container, it, CONVERSATION_FRAGMENT_TAG)
+                            .commit()
+                }
+                val progressBar = findViewById<ProgressBar>(R.id.waiting)
+                progressBar.visibility = GONE
 
                 val error = result.error ?: takeIf { result.fragment == null }?.let {
                     NRError(NRError.EmptyError, "Chat UI failed to init")
@@ -77,9 +93,7 @@ class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
                     Log.e(GenTag, "!!! Failed to start Messenger chat : $it")
                     finish()
                     onError(it)
-
                 } ?: openConversationFragment((result.fragment!!))
-
             }
         })
     }
@@ -133,9 +147,7 @@ class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-
         this.endMenu = menu?.findItem(R.id.end_current_chat)
-
         return true
     }
 
@@ -197,16 +209,24 @@ class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
         const val Logging = "logging"
         const val ScreenOrientation = "screenOrientation"
 
+//        fun intentFactory(deploymentId: String, domain: String, tokenStoreKey: String,
+//                            logging: Boolean, screenOrientation: Int): Intent {
+//
+//            return Intent("com.intent.action.Messenger_CHAT").apply {
+//                putExtra(DeploymentId, deploymentId)
+//                putExtra(Domain, domain)
+//                putExtra(TokenStoreKey, tokenStoreKey)
+//                putExtra(Logging, logging)
+//                putExtra(ScreenOrientation, screenOrientation)
+//            }
+//        }
 
-        fun intentFactory(deploymentId: String, domain: String, tokenStoreKey: String,
-                            logging: Boolean, screenOrientation: Int): Intent {
+        fun intentFactory(deploymentId: String, domain: String, logging: Boolean): Intent {
 
             return Intent("com.intent.action.Messenger_CHAT").apply {
                 putExtra(DeploymentId, deploymentId)
                 putExtra(Domain, domain)
-                putExtra(TokenStoreKey, tokenStoreKey)
                 putExtra(Logging, logging)
-                putExtra(ScreenOrientation, screenOrientation)
             }
         }
 

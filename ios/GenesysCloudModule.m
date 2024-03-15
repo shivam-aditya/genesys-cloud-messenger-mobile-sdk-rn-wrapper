@@ -26,8 +26,25 @@ RCT_EXPORT_MODULE(GenesysCloud)
 // MARK: - Exported Methods
 /************************************************************/
 
-RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (NSString *)tokenStoreKey: (BOOL)logging) {
-    MessengerAccount *account = [self setupAccount:deploymentId domain:domain tokenStoreKey:tokenStoreKey logging:logging];
+// RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (NSString *)tokenStoreKey: (BOOL)logging) {
+//     MessengerAccount *account = [self setupAccount:deploymentId domain:domain tokenStoreKey:tokenStoreKey logging:logging];
+//     [self startChatWithAccount:account];
+// }
+
+// RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (NSString *)tokenStoreKey: (BOOL)logging: (NSDictionary<NSString *, NSString *> *) customParams) {
+//     MessengerAccount *account = [self setupAccount:deploymentId domain:domain tokenStoreKey:tokenStoreKey logging:logging];
+//     //account.customAttributes = customParams;
+//     [self startChatWithAccount:account];
+// }
+
+RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (BOOL)logging) {
+    MessengerAccount *account = [self setupAccount:deploymentId domain:domain logging:logging];
+    [self startChatWithAccount:account];
+}
+
+RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (BOOL)logging: (NSDictionary<NSString *, NSString *> *) customParams) {
+    MessengerAccount *account = [self setupAccount:deploymentId domain:domain logging:logging];
+    //account.customAttributes = customParams;
     [self startChatWithAccount:account];
 }
 
@@ -35,11 +52,17 @@ RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (NSSt
 // MARK: - Private Methods
 /************************************************************/
 
+// - (MessengerAccount *)setupAccount:(NSString *)deploymentId
+//                             domain:(NSString *)domin
+//                      tokenStoreKey:(NSString *)tokenStoreKey
+//                            logging:(BOOL)logging {
+//     return [[MessengerAccount alloc] initWithDeploymentId:deploymentId domain:domin tokenStoreKey:tokenStoreKey logging:logging];
+// }
+
 - (MessengerAccount *)setupAccount:(NSString *)deploymentId
                             domain:(NSString *)domin
-                     tokenStoreKey:(NSString *)tokenStoreKey
                            logging:(BOOL)logging {
-    return [[MessengerAccount alloc] initWithDeploymentId:deploymentId domain:domin tokenStoreKey:tokenStoreKey logging:logging];
+    return [[MessengerAccount alloc] initWithDeploymentId:deploymentId domain:domin logging:logging];
 }
 
 - (void)startChatWithAccount:(MessengerAccount *)account {

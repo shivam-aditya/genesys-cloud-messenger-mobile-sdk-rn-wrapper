@@ -1,16 +1,13 @@
-
-
-
-# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPNpoTfN7s-CudM4rAFGbjNSbwARRjiOdu0otHMK9tiYL8__ZhreOhPyO5QHSuRIrSvDo&usqp=CAU" height="50" style="margin-right:20px"/> genesys-cloud-messenger-mobile-sdk-rn-wrapper 
+# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPNpoTfN7s-CudM4rAFGbjNSbwARRjiOdu0otHMK9tiYL8__ZhreOhPyO5QHSuRIrSvDo&usqp=CAU" height="50" style="margin-right:20px"/> genesys-cloud-messenger-mobile-sdk-rn-wrapper
 
 > Genesys Cloud Messaging SDK for React Native
 
-The SDK provides a simple react native wrapper for the Genesys Cloud Messenger SDK.
+The original SDK provides a simple react native wrapper for the Genesys Cloud Messenger SDK.
+This version has updates to support the v1.7.0 of the messenger-mobile-sdk.
 
-**Author:** Genesys
+**Author:** Genesys, Shivam Aditya
 
 **Platform Support:** Android, iOS
-
 
 - [Getting Started](#getting-started)
   - [Pre-Requisites](#pre-requisites)
@@ -20,9 +17,9 @@ The SDK provides a simple react native wrapper for the Genesys Cloud Messenger S
   - [Android](#android)
   - [iOS](#ios)
 - [Usage](#usage)
-    - [Import](#import)
-    - [Start Chat](#start-chat)
-    - [Chat Events](#chat-events)
+  - [Import](#import)
+  - [Start Chat](#start-chat)
+  - [Chat Events](#chat-events)
 - [Sample Application](https://github.com/genesys/MobileDxRNSample)
 - [License](#license)
 
@@ -38,29 +35,28 @@ Run the following on the application root directory.
 
 - **Option 1 - `npm install`**
 
-   ```sh
-   npm install genesys-cloud-messenger-mobile-sdk-rn-wrapper --save
-   ```
+  ```sh
+  npm install genesys-cloud-messenger-mobile-sdk-rn-wrapper --save
+  ```
 
 - **Option 2 - `yarn add`**
 
-   ```sh
-   yarn add genesys-cloud-messenger-mobile-sdk-rn-wrapper
-   ```
+  ```sh
+  yarn add genesys-cloud-messenger-mobile-sdk-rn-wrapper
+  ```
 
 - **Install Genesys chat module native dependency**
-   
-   ```sh
-   react-native link genesys-cloud-messenger-mobile-sdk-rn-wrapper
-   ```
+  ```sh
+  react-native link genesys-cloud-messenger-mobile-sdk-rn-wrapper
+  ```
 
 ### Update
 
 To update your project to the latest version of `genesys-messenger-mobile-sdk-rn-wrapper`
 
-   ```sh
-   npm update genesys-cloud-messenger-mobile-sdk-rn-wrapper
-   ```
+```sh
+npm update genesys-cloud-messenger-mobile-sdk-rn-wrapper
+```
 
 ## Platform specific additional steps
 
@@ -69,88 +65,98 @@ To update your project to the latest version of `genesys-messenger-mobile-sdk-rn
 In order to be able to use the chat module on android please follow the next steps.
 
 1. Go to `build.gradle` file, on the android project of your react native app.
-    ```cmd
-    YourAppFolder
-    ├── android
-    │   ├── app
-    │   │   ├── build.gradle  
-    │   │   ├── proguard-rules.pro
-    │   │   └── src
-    │   ├── build.gradle   <---
-    │   ├── gradle
-    │   │   └── wrapper
-    │   ├── gradle.properties
-    │   ├── gradlew
-    │   ├── gradlew.bat
-    │   └── settings.gradle
-    |
-    ```
+   ```cmd
+   YourAppFolder
+   ├── android
+   │   ├── app
+   │   │   ├── build.gradle
+   │   │   ├── proguard-rules.pro
+   │   │   └── src
+   │   ├── build.gradle   <---
+   │   ├── gradle
+   │   │   └── wrapper
+   │   ├── gradle.properties
+   │   ├── gradlew
+   │   ├── gradlew.bat
+   │   └── settings.gradle
+   |
+   ```
 
--  Add the following repositories:
-    ```gradle
-    mavenCentral()
-    maven {url "https://genesysdx.jfrog.io/artifactory/genesysdx-android.dev"}
-    ```
-
+- Add the following repositories:
+  ```gradle
+  mavenCentral()
+  maven {url "https://genesysdx.jfrog.io/artifactory/genesysdx-android.dev"}
+  ```
 
 ### ios
 
 In order to be able to use the chat module on iOS please follow the next steps.
 
 1. Go to `Podfile` file, on the ios project of your react native app.
-    ```cmd
-    YourAppFolder
-    ├── ios
-    │   ├── Podfile   <---
-    ```
-    -  validate your platform is set to `iOS13` or above.
-    ```ruby
-    platform :ios, '13.0'
-    ```
-    -  Add Genesys Messeging SDK sources.
-    ```ruby
-    source 'https://github.com/genesys/dx-sdk-specs-dev'
-    source 'https://github.com/CocoaPods/Specs'
-    ```
-    -  Add `use_frameworks!` inside `target` scope.
-    -  Add below `post_install` inside `target` scope.
-    ```ruby
-        target 'YourAppTargetName' do
-        config = use_native_modules!
-        use_frameworks!
 
-        use_react_native!(
-            :path => config[:reactNativePath],
-            # to enable hermes on iOS, change `false` to `true` and then install pods
-            :hermes_enabled => false
-        )
+   ```cmd
+   YourAppFolder
+   ├── ios
+   │   ├── Podfile   <---
+   ```
 
-        post_install do |installer|
-            react_native_post_install(installer)
+   - validate your platform is set to `iOS13` or above.
 
-            installer.pods_project.targets.each do |target|
-            target.build_configurations.each do |config|
-                config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-            end
+   ```ruby
+   platform :ios, '13.0'
+   ```
 
-            if (target.name&.eql?('FBReactNativeSpec'))
-                target.build_phases.each do |build_phase|
-                if (build_phase.respond_to?(:name) && build_phase.name.eql?('[CP-User] Generate Specs'))
-                    target.build_phases.move(build_phase, 0)
-                end
-                end
-            end
-            end
-        end
-        end
-    ```
-    >[Podfile Full Example](https://github.com/genesys/MobileDxRNSample/blob/master/ios/Podfile)
-    
-    - **Disable `Flipper` if activated.**
-    ```ruby
-         # use_flipper!()
-    ```
+   - Add Genesys Messeging SDK sources.
+
+   ```ruby
+   source 'https://github.com/genesys/dx-sdk-specs-dev'
+   source 'https://github.com/CocoaPods/Specs'
+   ```
+
+   - Add `use_frameworks!` inside `target` scope.
+   - Add below `post_install` inside `target` scope.
+
+   ```ruby
+       target 'YourAppTargetName' do
+       config = use_native_modules!
+       use_frameworks!
+
+       use_react_native!(
+           :path => config[:reactNativePath],
+           # to enable hermes on iOS, change `false` to `true` and then install pods
+           :hermes_enabled => false
+       )
+
+       post_install do |installer|
+           react_native_post_install(installer)
+
+           installer.pods_project.targets.each do |target|
+           target.build_configurations.each do |config|
+               config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+           end
+
+           if (target.name&.eql?('FBReactNativeSpec'))
+               target.build_phases.each do |build_phase|
+               if (build_phase.respond_to?(:name) && build_phase.name.eql?('[CP-User] Generate Specs'))
+                   target.build_phases.move(build_phase, 0)
+               end
+               end
+           end
+           end
+       end
+       end
+   ```
+
+   > [Podfile Full Example](https://github.com/genesys/MobileDxRNSample/blob/master/ios/Podfile)
+
+   - **Disable `Flipper` if activated.**
+
+   ```ruby
+        # use_flipper!()
+   ```
+
    2 . Make sure you run `pod update genesys-cloud-messenger-mobile-sdk-rn-wrapper` to get latest version.
+
 ## Usage
 
 ### import
@@ -158,7 +164,7 @@ In order to be able to use the chat module on iOS please follow the next steps.
 Import `GenesysCloud` module.
 
 ```javascript
-import { NativeModules } from 'react-native';
+import { NativeModules } from "react-native";
 const { GenesysCloud } = NativeModules;
 ```
 
@@ -172,45 +178,54 @@ GenesysCloud.startChat(deploymentId, domain, tokenStoreKey, logging);
 ```
 
 ### chat-events
-The wrapper allows listenning to events raised on the chat. 
+
+The wrapper allows listenning to events raised on the chat.
 
 - Error events
-  Error event has the following format: `{errorCode:"", reason:"", message:""}` 
+  Error event has the following format: `{errorCode:"", reason:"", message:""}`
 
 - State events
   Currently only `started` and `ended` are supported.
-  State event has the following format: `{state:""}` 
+  State event has the following format: `{state:""}`
 
 In order to register to chat events, add the following to your App:
 
 ```javascript
-import { DeviceEventEmitter, NativeEventEmitter } from 'react-native';
+import { DeviceEventEmitter, NativeEventEmitter } from "react-native";
 
 // Create event emitter to subscribe to chat events
-const eventEmitter = Platform.OS ===  'android' ? DeviceEventEmitter : new NativeEventEmitter(GenesysCloud)
+const eventEmitter =
+  Platform.OS === "android"
+    ? DeviceEventEmitter
+    : new NativeEventEmitter(GenesysCloud);
 
 //-> Before calling to startChat, make sure to subscribe to chat events.
 
 // Adds a listener to messenger chat errors.
-listeners['onMessengerError'] = eventEmitter.addListener('onMessengerError', (error) => {});
+listeners["onMessengerError"] = eventEmitter.addListener(
+  "onMessengerError",
+  (error) => {}
+);
 
 // Adds a listener to messenger chat state events.
-listeners['onMessengerState'] = eventEmitter.addListener('onMessengerState', (state)=>{});
+listeners["onMessengerState"] = eventEmitter.addListener(
+  "onMessengerState",
+  (state) => {}
+);
 
 //-> Once the chat was ended, the listeners should be removed.
-listeners['onMessengerError'].remove();
-listeners['onMessengerState'].remove();
+listeners["onMessengerError"].remove();
+listeners["onMessengerState"].remove();
 
-
-// E.g. Usage of the `ended` state event to remove chat listeners:  
+// E.g. Usage of the `ended` state event to remove chat listeners:
 const onStateChanged = (state) => {
-    if(state.state == 'ended'){
-        Object.keys(listeners).forEach((key)=>{
-            const listener = listeners[key]
-            console.log(`removing listener: ${key}`);
-            if(listener) listener.remove();
-        })
-    }
+  if (state.state == "ended") {
+    Object.keys(listeners).forEach((key) => {
+      const listener = listeners[key];
+      console.log(`removing listener: ${key}`);
+      if (listener) listener.remove();
+    });
+  }
 };
 ```
 
@@ -218,24 +233,28 @@ const onStateChanged = (state) => {
 
 ---
 
-## Android 
+## Android
+
 ### Configure chat screen orientation
+
 Before `startChat` is called, use `GenesysCloud.requestScreenOrientation()` API to set the chat orientation to one of the available options provided by `GenesysCloud.getConstants()`.
 
-- SCREEN_ORIENTATION_PORTRAIT 
-- SCREEN_ORIENTATION_LANDSCAPE 
-- SCREEN_ORIENTATION_UNSPECIFIED 
+- SCREEN_ORIENTATION_PORTRAIT
+- SCREEN_ORIENTATION_LANDSCAPE
+- SCREEN_ORIENTATION_UNSPECIFIED
 - SCREEN_ORIENTATION_LOCKED
 
 ```javascript
 // E.g.
-GenesysCloud.requestScreenOrientation(   
-                    GenesysCloud.getConstants().SCREEN_ORIENTATION_LOCKED)
+GenesysCloud.requestScreenOrientation(
+  GenesysCloud.getConstants().SCREEN_ORIENTATION_LOCKED
+);
 ```
 
 ### MinifyEnabled and proguard rules
-If the hosting app is using the `minifyEnabled` on gradle configurations, the following line should be added to the `proguard-rules.pro` file:   
-`-keep class com.genesys.cloud.messenger.transport.shyrka.** { *; }`   
+
+If the hosting app is using the `minifyEnabled` on gradle configurations, the following line should be added to the `proguard-rules.pro` file:  
+`-keep class com.genesys.cloud.messenger.transport.shyrka.** { *; }`
 
 ## License
 

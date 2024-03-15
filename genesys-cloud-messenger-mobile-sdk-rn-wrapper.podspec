@@ -3,12 +3,12 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
-  s.name         = 'genesys-cloud-messenger-mobile-sdk-rn-wrapper'
+  s.name         = 'genesys-cloud-messenger-mobileapp-wrapper'
   s.version      = package["version"]
-  s.summary      = 'Genesys Cloud Messenger Mobile SDK wrapper for React Native.'
+  s.summary      = 'Genesys Cloud Messenger MobileApp SDK React Native wrapper'
   s.homepage     = 'https://genesys.com'
   s.license      = { :type => 'MIT' }
-  s.authors      = 'Genesys, Shivam Aditya'
+  s.authors      = 'Shivam Aditya'
   s.platforms    = { :ios => '13.0' }
   s.source       = { :git => 'https://github.com/shivam-aditya/genesys-cloud-messenger-mobile-sdk-rn-wrapper', :tag => '#{s.version}' }
   s.source_files = "ios/**/*.{h,m,mm}"

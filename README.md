@@ -1,4 +1,4 @@
-# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPNpoTfN7s-CudM4rAFGbjNSbwARRjiOdu0otHMK9tiYL8__ZhreOhPyO5QHSuRIrSvDo&usqp=CAU" height="50" style="margin-right:20px"/> genesys-cloud-messenger-mobile-sdk-rn-wrapper
+# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPNpoTfN7s-CudM4rAFGbjNSbwARRjiOdu0otHMK9tiYL8__ZhreOhPyO5QHSuRIrSvDo&usqp=CAU" height="50" style="margin-right:20px"/> genesys-cloud-messenger-mobileapp-wrapper
 
 > Genesys Cloud Messaging SDK for React Native
 
@@ -36,26 +36,26 @@ Run the following on the application root directory.
 - **Option 1 - `npm install`**
 
   ```sh
-  npm install genesys-cloud-messenger-mobile-sdk-rn-wrapper --save
+  npm install genesys-cloud-messenger-mobileapp-wrapper --save
   ```
 
 - **Option 2 - `yarn add`**
 
   ```sh
-  yarn add genesys-cloud-messenger-mobile-sdk-rn-wrapper
+  yarn add genesys-cloud-messenger-mobileapp-wrapper
   ```
 
 - **Install Genesys chat module native dependency**
   ```sh
-  react-native link genesys-cloud-messenger-mobile-sdk-rn-wrapper
+  react-native link genesys-cloud-messenger-mobileapp-wrapper
   ```
 
 ### Update
 
-To update your project to the latest version of `genesys-messenger-mobile-sdk-rn-wrapper`
+To update your project to the latest version of `genesys-cloud-messenger-mobileapp-wrapper`
 
 ```sh
-npm update genesys-cloud-messenger-mobile-sdk-rn-wrapper
+npm update genesys-cloud-messenger-mobileapp-wrapper
 ```
 
 ## Platform specific additional steps
@@ -155,7 +155,7 @@ In order to be able to use the chat module on iOS please follow the next steps.
         # use_flipper!()
    ```
 
-   2 . Make sure you run `pod update genesys-cloud-messenger-mobile-sdk-rn-wrapper` to get latest version.
+   2 . Make sure you run `pod update genesys-cloud-messenger-mobileapp-wrapper` to get latest version.
 
 ## Usage
 

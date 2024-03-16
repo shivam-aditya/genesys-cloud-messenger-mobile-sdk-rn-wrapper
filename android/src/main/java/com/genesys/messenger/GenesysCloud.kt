@@ -44,22 +44,23 @@ class GenesysCloud(context: ReactApplicationContext) : ReactContextBaseJavaModul
     }
 
     @ReactMethod
-    fun startChat(deploymentId: String, domain: String, logging: Boolean) {
-//        reactApplicationContext.let {
-//            currentActivity?.run {
-//                startActivity(GenesysCloudChatActivity.intentFactory(deploymentId, domain, tokenStoreKey, logging,
-//                    screenOrientation));
-//                MobileMessengerActivity.intentFactory(deploymentId, domain, logging)
-//            }
-//        }
+    fun startChat(deploymentId: String, domain: String, tokenStoreKey: String, logging: Boolean) {
+       reactApplicationContext.let {
+           currentActivity?.run {
+               startActivity(GenesysCloudChatActivity.intentFactory(deploymentId, domain, tokenStoreKey, logging,
+                   screenOrientation));
+           }
+       }
+    }
 
-        reactApplicationContext.let {
-            currentActivity?.run {
-                startActivity(
-                        MobileMessengerActivity.intentFactory(deploymentId, domain, logging)
-                )
-            }
-        }
+    @ReactMethod
+    fun startChatWithCustomAttributes(deploymentId: String, domain: String, tokenStoreKey: String, logging: Boolean, customAttributes: Map<String, String>) {
+       reactApplicationContext.let {
+           currentActivity?.run {
+               startActivity(GenesysCloudChatActivity.intentFactory(deploymentId, domain, tokenStoreKey, logging,
+                   screenOrientation, customAttributes));
+           }
+       }
     }
 
     /**

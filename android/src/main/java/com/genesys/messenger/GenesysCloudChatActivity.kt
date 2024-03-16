@@ -46,15 +46,27 @@ class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
     }
 
     private fun initAccount() {
-//        account = MessengerAccount(intent.getStringExtra(DeploymentId, ""), intent.getStringExtra(Domain, "")).apply {
-//            tokenStoreKey = intent.getStringExtra(TokenStoreKey, "")
-//            logging = intent.getBooleanExtra(Logging, false)
-//        }
+        // account = MessengerAccount(
+        //     deploymentId = intent.getStringExtra(DeploymentId, ""),
+        //     domain = intent.getStringExtra(Domain, "")
+        // ).apply {
+        //     tokenStoreKey = intent.getStringExtra(TokenStoreKey, "")
+        //     logging = intent.getBooleanExtra(Logging, false)
+        // }
+
+        val customAttr = intent.getSerializableExtra(CustomAttributes) as? Map<String, String> ?: emptyMap()
+
         account = MessengerAccount(
-                deploymentId = intent.getStringExtra(DeploymentId, ""),
-                domain = intent.getStringExtra(Domain, "")
+            deploymentId = intent.getStringExtra(DeploymentId, ""),
+            domain = intent.getStringExtra(Domain, "")
         ).apply {
+            tokenStoreKey = intent.getStringExtra(TokenStoreKey, "")
             logging = intent.getBooleanExtra(Logging, false)
+
+            if (customAttr.isNotEmpty()) {
+                // customAttributes = mapOf(String to String)
+                customAttributes = customAttr
+            }
         }
     }
 
@@ -208,27 +220,38 @@ class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
         const val TokenStoreKey = "tokenStoreKey"
         const val Logging = "logging"
         const val ScreenOrientation = "screenOrientation"
+        const val CustomAttributes = "customAttributes"
 
-//        fun intentFactory(deploymentId: String, domain: String, tokenStoreKey: String,
-//                            logging: Boolean, screenOrientation: Int): Intent {
-//
-//            return Intent("com.intent.action.Messenger_CHAT").apply {
-//                putExtra(DeploymentId, deploymentId)
-//                putExtra(Domain, domain)
-//                putExtra(TokenStoreKey, tokenStoreKey)
-//                putExtra(Logging, logging)
-//                putExtra(ScreenOrientation, screenOrientation)
-//            }
-//        }
+       fun intentFactory(deploymentId: String, domain: String, tokenStoreKey: String,
+                           logging: Boolean, screenOrientation: Int): Intent {
+           return Intent("com.intent.action.Messenger_CHAT").apply {
+               putExtra(DeploymentId, deploymentId)
+               putExtra(Domain, domain)
+               putExtra(TokenStoreKey, tokenStoreKey)
+               putExtra(Logging, logging)
+               putExtra(ScreenOrientation, screenOrientation)
+           }
+       }
 
-        fun intentFactory(deploymentId: String, domain: String, logging: Boolean): Intent {
+       fun intentFactory(deploymentId: String, domain: String, tokenStoreKey: String,
+                           logging: Boolean, screenOrientation: Int, customAttributes: Map<String, String>): Intent {
+           return Intent("com.intent.action.Messenger_CHAT").apply {
+               putExtra(DeploymentId, deploymentId)
+               putExtra(Domain, domain)
+               putExtra(TokenStoreKey, tokenStoreKey)
+               putExtra(Logging, logging)
+               putExtra(ScreenOrientation, screenOrientation)
+               putExtra(CustomAttributes, customAttributes)
+           }
+       }
 
-            return Intent("com.intent.action.Messenger_CHAT").apply {
-                putExtra(DeploymentId, deploymentId)
-                putExtra(Domain, domain)
-                putExtra(Logging, logging)
-            }
-        }
+        // fun intentFactory(deploymentId: String, domain: String, logging: Boolean): Intent {
+        //     return Intent("com.intent.action.Messenger_CHAT").apply {
+        //         putExtra(DeploymentId, deploymentId)
+        //         putExtra(Domain, domain)
+        //         putExtra(Logging, logging)
+        //     }
+        // }
 
         private fun Intent.getStringExtra(key: String, fallback: String?): String {
             return getStringExtra(key) ?: fallback ?: ""

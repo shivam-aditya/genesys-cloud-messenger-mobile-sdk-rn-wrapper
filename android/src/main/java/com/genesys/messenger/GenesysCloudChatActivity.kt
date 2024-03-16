@@ -32,6 +32,7 @@ class GenesysCloudChatActivity : ReactActivity(), ChatEventListener {
         super.onCreate(savedInstanceState)
         Log.i(GenTag, "onCreate:")
 
+        setTheme(R.style.Theme_AppCompat_DayNight_NoActionBar)
         setContentView(R.layout.fragment_layout)
         setSupportActionBar(findViewById(R.id.chat_toolbar))
         requestedOrientation = intent.getIntExtra(ScreenOrientation, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)

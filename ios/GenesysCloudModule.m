@@ -31,7 +31,7 @@ RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (NSSt
     [self startChatWithAccount:account];
 }
 
-RCT_EXPORT_METHOD(startChat: (NSString *)deploymentId: (NSString *)domain: (NSString *)tokenStoreKey: (BOOL)logging: (NSDictionary<NSString *, NSString *> *) customAttributes) {
+RCT_EXPORT_METHOD(startChatWithCustomAttributes: (NSString *)deploymentId: (NSString *)domain: (NSString *)tokenStoreKey: (BOOL)logging: (NSDictionary<NSString *, NSString *> *) customAttributes) {
     MessengerAccount *account = [self setupAccount:deploymentId domain:domain tokenStoreKey:tokenStoreKey logging:logging];
     account.customAttributes = customAttributes;
     [self startChatWithAccount:account];

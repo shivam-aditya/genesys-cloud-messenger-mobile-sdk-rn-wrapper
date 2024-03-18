@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm}"
   s.dependency 'React-Core'
   # s.dependency 'GenesysCloud', '4.1.0'
-  s.dependency 'GenesysCloud', '1.7.0'
+  s.dependency 'GenesysCloud', '1.6.0'
   s.static_framework = true
 end

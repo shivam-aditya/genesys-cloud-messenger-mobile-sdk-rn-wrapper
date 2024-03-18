@@ -85,7 +85,9 @@ In order to be able to use the chat module on android please follow the next ste
 - Add the following repositories:
   ```gradle
   mavenCentral()
-  maven {url "https://genesysdx.jfrog.io/artifactory/genesysdx-android.dev"}
+  maven {
+        url ("https://genesysdx.jfrog.io/artifactory/genesys-cloud-android.prod/")
+    }
   ```
 
 ### ios
@@ -176,6 +178,23 @@ Call `startChat` to get the messenging view and start conversation with an agent
 // Start a chat using the following line:
 GenesysCloud.startChat(deploymentId, domain, tokenStoreKey, logging);
 ```
+
+### start-chat with custom attributes
+
+Call `startChatWithCustomAttributes` to get the messenging view and start conversation with an agent with custom attributes.
+
+```javascript
+// Start a chat using the following line:
+GenesysCloud.startChat(
+  deploymentId,
+  domain,
+  tokenStoreKey,
+  logging,
+  customAttributes
+);
+```
+
+Here customAttributes should be a Map / Dictionary of [String, String] attributes.
 
 ### chat-events
 
